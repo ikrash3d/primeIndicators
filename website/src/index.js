@@ -3,8 +3,8 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { initalizeApp } from "firebase/app";
-import { getAnalystics } from "firebase/analytics";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBilJ51wT2bYUnw2vKlqxuWzPD3Tu0schw",
@@ -15,7 +15,6 @@ const firebaseConfig = {
   appId: "1:42999655981:web:f809146a1201d0535f12a4",
   measurementId: "G-L4R3JQFJ2B",
 };
-// Initialize Firebase
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);

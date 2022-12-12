@@ -15,3 +15,9 @@
   align-items: center;
   flex-direction: row;
 }
+
+@media screen and (max-width: 767px) {
+  .container {
+    flex-direction: column;
+  }
+}

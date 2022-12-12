@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <Layout>
       <img className={styles.imgContainer} src={logo} alt="Prime Indicator logo"></img>
-      <p style={{ margin: "-50px 0px 50px 0px" }}>Your place for the best indicators</p>
+      <h3 className={styles.subTitle}>Your place for the best indicators</h3>
       <Button variant="contained" style={{ backgroundColor: "#168a53" }}>
         View our services
       </Button>

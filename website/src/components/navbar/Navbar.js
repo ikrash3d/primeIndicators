@@ -15,10 +15,10 @@ const Navbar = () => {
       <div className={styles.separator}>
         <img className={styles.imgContainer} src={logo} alt="Prime Indicator logo"></img>
       </div>
-      <div className={styles.separator}></div>
-      <div className={styles.separator}>
+      <div className={(styles.separator, styles.separatorHidden)}></div>
+      <div className={styles.separator} style={{ width: "100%" }}>
         <ul>
-          <Link underline="none" component={RouterLink} to="/">
+          <Link underline="none" component={RouterLink} to="/home">
             <Button variant="container" style={{ color: "white" }}>
               Home
             </Button>
