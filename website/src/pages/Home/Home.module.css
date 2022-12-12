@@ -1,0 +1,20 @@
+.imgContainer {
+  width: 40%;
+}
+
+.buttonContainer {
+  margin-top: -50px;
+}
+
+p {
+  color: black;
+}
+
+.servicesContainer {
+  margin-top: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+}

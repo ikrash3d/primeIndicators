@@ -1,0 +1,9 @@
+/** @format */
+
+.headerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  flex-direction: row;
+}

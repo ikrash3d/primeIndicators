@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  padding-bottom: 25px;
+  height: 100%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.contentCard p {
+  color: black;
+}
+
+.contentP {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 90%;
+}
+
+.contentP p {
+  padding-left: 7px;
+}
