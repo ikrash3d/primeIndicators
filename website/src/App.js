@@ -6,12 +6,14 @@ import Home from "./pages/Home/Home";
 import Services from "./pages/Services/Services";
 import Story from "./pages/Story/Story";
 import Account from "./pages/Account/Account";
+import WIP from "./components/WIP";
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route exactly path="/" element={<Home></Home>}></Route>
+        <Route exactly path="/" element={<WIP></WIP>}></Route>
+        <Route exactly path="/home" element={<Home></Home>}></Route>
         <Route exactly path="/services" element={<Services></Services>}></Route>
         <Route exactly path="/story" element={<Story></Story>}></Route>
         <Route exactly path="/account" element={<Account></Account>}></Route>

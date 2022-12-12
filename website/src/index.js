@@ -3,6 +3,22 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { initalizeApp } from "firebase/app";
+import { getAnalystics } from "firebase/analytics";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBilJ51wT2bYUnw2vKlqxuWzPD3Tu0schw",
+  authDomain: "prime-indicators.firebaseapp.com",
+  projectId: "prime-indicators",
+  storageBucket: "prime-indicators.appspot.com",
+  messagingSenderId: "42999655981",
+  appId: "1:42999655981:web:f809146a1201d0535f12a4",
+  measurementId: "G-L4R3JQFJ2B",
+};
+// Initialize Firebase
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
