@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
 import Services from "./pages/Services/Services";
@@ -12,7 +12,8 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route exactly path="/" element={<WIP></WIP>}></Route>
+        <Route exactly path="/" element={<Navigate replace to="/home"></Navigate>}></Route>
+        {/* <Route exactly path="/" element={<WIP></WIP>}></Route> */}
         <Route exactly path="/home" element={<Home></Home>}></Route>
         <Route exactly path="/services" element={<Services></Services>}></Route>
         <Route exactly path="/story" element={<Story></Story>}></Route>
