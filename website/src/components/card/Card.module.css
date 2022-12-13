@@ -10,7 +10,14 @@
   border-radius: 10px;
 }
 
-.contentCard p {
+.cardHeader h3 {
+}
+
+.cardFooter {
+  margin-top: 15px;
+}
+
+.cardContent p {
   color: black;
 }
 

@@ -5,9 +5,11 @@ import CheckIcon from "@mui/icons-material/Check";
 
 const Card = (props) => {
   return (
-    <div className={styles.container}>
-      <h3>{props.price}</h3>
-      <div className={styles.contentCard}>
+    <div className={styles.container} style={{ height: props.height, width: props.width }}>
+      <div className={styles.cardHeader}>
+        <h3>{props.price}</h3>
+      </div>
+      <div className={styles.cardContent}>
         <div className={styles.contentP}>
           <CheckIcon style={{ color: "green" }}></CheckIcon>
           <p>Indicator</p>
@@ -21,9 +23,11 @@ const Card = (props) => {
           <p>Strategy</p>
         </div>
       </div>
-      <Button variant="contained" style={{ backgroundColor: "#168a53" }}>
-        Subscribe
-      </Button>
+      <div className={styles.cardFooter}>
+        <Button variant="contained" style={{ backgroundColor: "#168a53" }}>
+          Subscribe
+        </Button>
+      </div>
     </div>
   );
 };
