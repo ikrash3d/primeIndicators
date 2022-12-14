@@ -1,61 +1,79 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import Link from "@mui/material/Link";
-
 import logo from "../../assets/TransparentLogo.png";
 import styles from "./navbar.module.css";
 import Button from "@mui/material/Button";
+import MenuIcon from "@mui/icons-material/Menu";
+import Link from "@mui/material/Link";
 
 const Navbar = () => {
   const [isLoggedIn] = useState(true);
+  const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.separator}>
-        <img className={styles.imgContainer} src={logo} alt="Prime Indicator logo"></img>
-      </div>
-      <div className={(styles.separator, styles.separatorHidden)}></div>
-      <div className={styles.separator} style={{ width: "100%" }}>
+  const renderMobileMenu = () => {
+    return <div></div>;
+  };
+
+  const toggleBurgerMenu = () => {
+    setIsMobileMenuOpened(!isMobileMenuOpened);
+  };
+
+  useEffect(() => {
+    console.log(isMobileMenuOpened);
+    document.body.style.overflow = "visible";
+    if (isMobileMenuOpened) {
+      document.body.style.overflow = "hidden";
+      return;
+    }
+  }, [isMobileMenuOpened]);
+
+  const menuContent = () => {
+    return (
+      <div
+        className={`${styles.contentContainer} ${
+          isMobileMenuOpened ? `${styles.openBurgerMenu}` : `${styles.closeBurgerMenu}`
+        }`}
+      >
+        {console.log(isMobileMenuOpened)}
         <ul>
           <Link underline="none" component={RouterLink} to="/home">
-            <Button variant="container" style={{ color: "white" }}>
+            <Button variant="container" className={styles.buttonStyle}>
               Home
             </Button>
           </Link>
           <Link underline="none" component={RouterLink} to="/services">
-            <Button variant="container" style={{ color: "white" }}>
+            <Button variant="container" className={styles.buttonStyle}>
               Services
             </Button>
           </Link>
           <Link underline="none" component={RouterLink} to="/story">
-            <Button variant="container" style={{ color: "white" }}>
+            <Button variant="container" className={styles.buttonStyle}>
               Story
             </Button>
           </Link>
           <Link underline="none" component={RouterLink} to="/account">
-            <Button variant="container" style={{ color: "white" }}>
+            <Button variant="container" className={styles.buttonStyle}>
               {isLoggedIn ? "My account" : "Log in"}
             </Button>
           </Link>
         </ul>
       </div>
-    </div>
+    );
+  };
+  return (
+    <div className={styles.container}>
+      <div className={styles.separator} style={{ justifyContent: "flex-start" }}>
+        <img className={styles.imgContainer} src={logo} alt="Prime Indicator logo"></img>
+      </div>
 
-    //    <ul>
-    //    <li>
-    //      <Link to="/">Home</Link>
-    //    </li>
-    //    <li>
-    //      <Link to="/services">Services</Link>
-    //    </li>
-    //    <li>
-    //      <Link to="/story">Story</Link>
-    //    </li>
-    //    <li>
-    //      <Link to="/account">Account</Link>
-    //    </li>
-    //  </ul>
+      <div className={styles.separator} style={{ width: "100%" }}>
+        <div onClick={toggleBurgerMenu} className={styles.menuIconContainer}>
+          <MenuIcon className={styles.menuIcon}></MenuIcon>
+        </div>
+        {menuContent()}
+        {/* {menuContent()} */}
+      </div>
+    </div>
   );
 };
 

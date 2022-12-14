@@ -10,11 +10,16 @@ const Home = () => {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 768px)");
+    if (mediaQuery.matches) {
+      setCardDimensions({ height: "", width: "90%" });
+      return;
+    }
     mediaQuery.addEventListener("change", () => {
-      setCardDimensions({ height: "320px", width: "25%" });
       if (mediaQuery.matches) {
         setCardDimensions({ height: "", width: "90%" });
+        return;
       }
+      setCardDimensions({ height: "320px", width: "25%" });
     });
   }, []);
 
