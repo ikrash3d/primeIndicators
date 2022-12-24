@@ -85,7 +85,7 @@ const Account = () => {
 
               <Field
                 as={TextField}
-                label="Emai"
+                label="Email"
                 name="email"
                 type="email"
                 fullWidth
