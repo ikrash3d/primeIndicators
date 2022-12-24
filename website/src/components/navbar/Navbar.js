@@ -9,10 +9,7 @@ import Link from "@mui/material/Link";
 const Navbar = () => {
   const [isLoggedIn] = useState(true);
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
-
-  const renderMobileMenu = () => {
-    return <div></div>;
-  };
+  const [burgerMenuEffect, setBurgerMenuEffect] = useState(`${styles.closeBurgerMenu}`);
 
   const toggleBurgerMenu = () => {
     setIsMobileMenuOpened(!isMobileMenuOpened);
@@ -27,14 +24,15 @@ const Navbar = () => {
     }
   }, [isMobileMenuOpened]);
 
+  useEffect(() => {
+    isMobileMenuOpened
+      ? setBurgerMenuEffect(`${styles.openBurgerMenu}`)
+      : setBurgerMenuEffect(`${styles.closeBurgerMenu}`);
+  }, [isMobileMenuOpened]);
+
   const menuContent = () => {
     return (
-      <div
-        className={`${styles.contentContainer} ${
-          isMobileMenuOpened ? `${styles.openBurgerMenu}` : `${styles.closeBurgerMenu}`
-        }`}
-      >
-        {console.log(isMobileMenuOpened)}
+      <div className={`${styles.contentContainer} ${burgerMenuEffect}`}>
         <ul>
           <Link underline="none" component={RouterLink} to="/home">
             <Button variant="container" className={styles.buttonStyle}>
@@ -71,7 +69,6 @@ const Navbar = () => {
           <MenuIcon className={styles.menuIcon}></MenuIcon>
         </div>
         {menuContent()}
-        {/* {menuContent()} */}
       </div>
     </div>
   );
