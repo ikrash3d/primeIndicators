@@ -27,14 +27,13 @@ const Signup = () => {
     firstName: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("A first name is required"),
     lastName: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("A last name is required"),
     email: Yup.string().email("Invalid email").required("An email is required"),
-    // password: Yup.string()
-    //   .min(4, "Too Short!")
-    //   .matches(
-    //     PASSWORD_REGEX,
-    //     "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-    //   )
-    //   .required("A password is required"),
-    password: Yup.string().required("Required"),
+    password: Yup.string()
+      .min(4, "Too Short!")
+      .matches(
+        PASSWORD_REGEX,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      )
+      .required("A password is required"),
   });
 
   const logInSchema = Yup.object().shape({
@@ -46,7 +45,6 @@ const Signup = () => {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, values.email, values.password)
       .then((response) => {
-        console.log("sent");
         navigate("/home");
         sessionStorage.setItem("Auth Token", response._tokenResponse.refreshToken);
         props.resetForm();
