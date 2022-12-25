@@ -5,7 +5,7 @@ import Card from "../../components/card/Card";
 import logo from "../../assets/OriginalLogo.svg";
 import { Button } from "@mui/material";
 
-const Home = () => {
+const Home = (props) => {
   const [cardDimensions, setCardDimensions] = useState({ height: "320px", width: "25%" });
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Layout>
+    <Layout currentAuth={props.currentAuth}>
       <img className={styles.imgContainer} src={logo} alt="Prime Indicator logo"></img>
       <h3 className={styles.subTitle}>Your place for the best indicators</h3>
       <Button variant="contained" style={{ backgroundColor: "#168a53" }}>

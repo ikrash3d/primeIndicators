@@ -28,17 +28,16 @@ const Login = () => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, values.email, values.password)
       .then((response) => {
-        console.log("response", response);
         navigate("/home");
         sessionStorage.setItem("Auth Token", response._tokenResponse.refreshToken);
       })
       .catch((error) => {
         console.log(error.code);
         if (error.code === "auth/wrong-password") {
-          console.log("Please check the Password");
+          alert("Please check the Password");
         }
         if (error.code === "auth/user-not-found") {
-          console.log("Please check the Email");
+          alert("Please check the Email");
         }
       });
   };

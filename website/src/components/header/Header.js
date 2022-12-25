@@ -1,12 +1,11 @@
 import React from "react";
 import Navbar from "../navbar/Navbar";
 import styles from "./header.module.css";
-import CardHeader from "@mui/material/CardHeader";
 
-const Header = () => {
+const Header = (props) => {
   return (
     <div className={styles.headerContainer}>
-      <Navbar></Navbar>
+      <Navbar currentAuth={props.currentAuth}></Navbar>
     </div>
   );
 };

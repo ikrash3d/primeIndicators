@@ -6,31 +6,12 @@ import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "@mui/material/Link";
 import { getAuth, signOut } from "firebase/auth";
-import firebase from "firebase/app";
 import "firebase/auth";
-const Navbar = () => {
-  const [isLoggedIn] = useState(true);
+const Navbar = (props) => {
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
+  const [authToken, setAuthToken] = useState("");
   const [burgerMenuEffect, setBurgerMenuEffect] = useState(`${styles.closeBurgerMenu}`);
-  const [currentFirebaseUser, setCurrentFirebaseUser] = useState({});
-
   const navigate = useNavigate();
-
-  const toggleBurgerMenu = () => {
-    setIsMobileMenuOpened(!isMobileMenuOpened);
-  };
-
-  const handleLogout = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then((response) => {
-        console.log(response);
-        navigate("/home");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   useEffect(() => {
     document.body.style.overflow = "visible";
@@ -41,21 +22,35 @@ const Navbar = () => {
   }, [isMobileMenuOpened]);
 
   useEffect(() => {
-    const auth = getAuth();
-    if (auth !== null) {
-      setCurrentFirebaseUser(auth.currentUser);
-    }
-    console.log(currentFirebaseUser);
-  });
-
-  useEffect(() => {
     isMobileMenuOpened
       ? setBurgerMenuEffect(`${styles.openBurgerMenu}`)
       : setBurgerMenuEffect(`${styles.closeBurgerMenu}`);
   }, [isMobileMenuOpened]);
 
+  useEffect(() => {
+    let token = sessionStorage.getItem("Auth Token");
+    setAuthToken(token);
+  }, []);
+
+  const toggleBurgerMenu = () => {
+    setIsMobileMenuOpened(!isMobileMenuOpened);
+  };
+
+  const handleLogout = async () => {
+    try {
+      const auth = getAuth();
+      await signOut(auth);
+
+      sessionStorage.removeItem("Auth Token");
+
+      navigate("/home");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const renderLogInLogOutButton = () => {
-    if (currentFirebaseUser !== null) {
+    if (authToken !== null) {
       return (
         <Button
           variant="container"
@@ -75,13 +70,10 @@ const Navbar = () => {
     );
   };
 
-  const getCurrentUser = () => {};
-
   const menuContent = () => {
     return (
       <div className={`${styles.contentContainer} ${burgerMenuEffect}`}>
         <ul>
-          {getCurrentUser()}
           <Link underline="none" component={RouterLink} to="/home">
             <Button variant="container" className={styles.buttonStyle}>
               Home
