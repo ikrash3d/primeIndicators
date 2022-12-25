@@ -12,6 +12,7 @@ const Navbar = () => {
   const [isLoggedIn] = useState(true);
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
   const [burgerMenuEffect, setBurgerMenuEffect] = useState(`${styles.closeBurgerMenu}`);
+  const [currentFirebaseUser, setCurrentFirebaseUser] = useState({});
 
   const navigate = useNavigate();
 
@@ -32,7 +33,6 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    console.log(isMobileMenuOpened);
     document.body.style.overflow = "visible";
     if (isMobileMenuOpened) {
       document.body.style.overflow = "hidden";
@@ -41,10 +41,39 @@ const Navbar = () => {
   }, [isMobileMenuOpened]);
 
   useEffect(() => {
+    const auth = getAuth();
+    if (auth !== null) {
+      setCurrentFirebaseUser(auth.currentUser);
+    }
+    console.log(currentFirebaseUser);
+  });
+
+  useEffect(() => {
     isMobileMenuOpened
       ? setBurgerMenuEffect(`${styles.openBurgerMenu}`)
       : setBurgerMenuEffect(`${styles.closeBurgerMenu}`);
   }, [isMobileMenuOpened]);
+
+  const renderLogInLogOutButton = () => {
+    if (currentFirebaseUser !== null) {
+      return (
+        <Button
+          variant="container"
+          className={styles.buttonStyle}
+          component={RouterLink}
+          onClick={handleLogout}
+          to="/login-page"
+        >
+          Log Out
+        </Button>
+      );
+    }
+    return (
+      <Button variant="container" className={styles.buttonStyle} component={RouterLink} to="/login-page">
+        Log In
+      </Button>
+    );
+  };
 
   const getCurrentUser = () => {};
 
@@ -74,9 +103,7 @@ const Navbar = () => {
             </Button>
           </Link>
 
-          <Button variant="container" className={styles.buttonStyle} component={RouterLink} to="/login-page">
-            Log out
-          </Button>
+          {renderLogInLogOutButton()}
         </ul>
       </div>
     );
