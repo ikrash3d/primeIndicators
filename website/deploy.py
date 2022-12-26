@@ -1,9 +1,13 @@
 import subprocess
 
-commitMessage = input("Please enter a commit message with the " "")
+commitMessage = input("Please enter a commit message with the double quotation mark: ")
 
-subprocess.check_call("git add .", shell=True)
-subprocess.check_call("git commit -m ${commitMessage}", shell=True)
-subprocess.check_call("git push")
-subprocess.check_call("npm run build")
-subprocess.check_call("firebase deploy")
+p1 = subprocess.run("git add .", shell=True)
+
+p2 = subprocess.run("git commit -m ${commitMessage}", shell=True)
+
+p3 = subprocess.run("git push")
+
+p4 = subprocess.run("npm run build")
+
+p5 = subprocess.run("firebase deploy")
