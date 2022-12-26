@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div className={styles.container}>
       <p>
-        <a></a> Prime Indicator 2022
+        <a>©</a> Prime Indicator 2022
       </p>
     </div>
   );
