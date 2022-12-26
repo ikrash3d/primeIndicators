@@ -1,22 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { TextField, Button } from "@mui/material";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as Yup from "yup";
 import styles from "./Signup.module.css";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-const PASSWORD_REGEX = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/";
+const PASSWORD_REGEX = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
 
 const Signup = () => {
-  const [signUpForm, setSignUpForm] = useState(true);
-  const toggleSignUpForm = () => {
-    setSignUpForm(!signUpForm);
-  };
-
   const initialSignUpValue = {
     firstName: "",
     lastName: "",
+    tradingViewName: "",
     email: "",
     password: "",
   };
@@ -26,27 +22,25 @@ const Signup = () => {
   const signUpSchema = Yup.object().shape({
     firstName: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("A first name is required"),
     lastName: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("A last name is required"),
+    tradingViewName: Yup.string().required("Your TradingView username/email is required"),
     email: Yup.string().email("Invalid email").required("An email is required"),
     password: Yup.string()
-      .min(4, "Too Short!")
+      .min(8, "Too Short!")
       .matches(
         PASSWORD_REGEX,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+        "Must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character"
       )
       .required("A password is required"),
-  });
-
-  const logInSchema = Yup.object().shape({
-    email: Yup.string().required("Please provide your email"),
-    password: Yup.string().required("Please provide your password"),
   });
 
   const handleSignUpSubmit = (values, props) => {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, values.email, values.password)
       .then((response) => {
-        navigate("/home");
+        console.log(response);
+        sendEmailVerification(response.user);
         sessionStorage.setItem("Auth Token", response._tokenResponse.refreshToken);
+        navigate("/home");
         props.resetForm();
       })
       .catch((error) => {
@@ -86,6 +80,17 @@ const Signup = () => {
               variant="outlined"
               helperText={<ErrorMessage name="lastName"></ErrorMessage>}
               error={props.errors.lastName && props.touched.lastName}
+            ></Field>
+            <br></br>
+
+            <Field
+              as={TextField}
+              label="TradingView username"
+              name="tradingViewName"
+              fullWidth
+              variant="outlined"
+              helperText={<ErrorMessage name="tradingViewName"></ErrorMessage>}
+              error={props.errors.tradingViewName && props.touched.tradingViewName}
             ></Field>
             <br></br>
 

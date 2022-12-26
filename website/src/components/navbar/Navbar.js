@@ -6,8 +6,8 @@ import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "@mui/material/Link";
 import { getAuth, signOut } from "firebase/auth";
-import "firebase/auth";
-const Navbar = (props) => {
+
+const Navbar = () => {
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
   const [authToken, setAuthToken] = useState("");
   const [burgerMenuEffect, setBurgerMenuEffect] = useState(`${styles.closeBurgerMenu}`);
@@ -63,11 +63,6 @@ const Navbar = (props) => {
         </Button>
       );
     }
-    return (
-      <Button variant="container" className={styles.buttonStyle} component={RouterLink} to="/login-page">
-        Log In
-      </Button>
-    );
   };
 
   const menuContent = () => {
@@ -89,7 +84,7 @@ const Navbar = (props) => {
               Story
             </Button>
           </Link>
-          <Link underline="none" component={RouterLink} to="/account">
+          <Link underline="none" component={RouterLink} to="/login-page">
             <Button variant="container" className={styles.buttonStyle}>
               My Account
             </Button>

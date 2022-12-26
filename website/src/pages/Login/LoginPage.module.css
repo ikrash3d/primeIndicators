@@ -6,3 +6,34 @@
   align-items: inherit;
   flex-direction: inherit;
 }
+
+.container h3 {
+  margin: 20px 0 -10px 0;
+  padding: 0;
+}
+
+.container p,
+a {
+  font-weight: 600;
+}
+
+.container a {
+  color: #168a53;
+}
+
+.forgotPassword {
+  margin: 20px 0 0 0;
+  padding: 0;
+  font-weight: 600;
+  color: #168a53;
+}
+
+.forgotPassword:hover {
+  cursor: pointer;
+  color: #0f5d38;
+}
+
+.container a:hover {
+  cursor: pointer;
+  color: #0f5d38;
+}
