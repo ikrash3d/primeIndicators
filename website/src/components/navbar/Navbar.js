@@ -51,7 +51,6 @@ const Navbar = () => {
   };
 
   const renderMyAccountLink = () => {
-    console.log(sessionStorage.getItem("Auth Token"));
     if (sessionStorage.getItem("Auth Token")) {
       return (
         <Link underline="none" component={RouterLink} to="/account">
@@ -70,18 +69,16 @@ const Navbar = () => {
     );
   };
 
-  const renderLogInLogOutButton = () => {
+  const renderLogoutButton = () => {
     if (authToken !== null) {
       return (
-        <Button
-          variant="container"
-          className={styles.buttonStyle}
-          component={RouterLink}
-          onClick={handleLogout}
-          to="/login-page"
-        >
-          Log Out
-        </Button>
+        <MenuItem onClick={handleClose}>
+          <Link underline="none" component={RouterLink} to="/login-page">
+            <Button variant="container" className={styles.buttonStyle} onClick={handleLogout}>
+              Log Out
+            </Button>
+          </Link>
+        </MenuItem>
       );
     }
   };
@@ -135,6 +132,7 @@ const Navbar = () => {
               </Button>
             </Link>
           </MenuItem>
+          {renderLogoutButton()}
         </Menu>
       </div>
     );
@@ -162,7 +160,7 @@ const Navbar = () => {
 
           {renderMyAccountLink()}
 
-          {renderLogInLogOutButton()}
+          {renderLogoutButton()}
         </ul>
       </div>
     );
