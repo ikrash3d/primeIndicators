@@ -42,7 +42,10 @@ const LoginPage = () => {
             Forgot your password?
           </p>
           <p>
-            Don't have an account? <a onClick={toggleForm}>Sign up</a>
+            Don't have an account?{" "}
+            <a href="" onClick={toggleForm}>
+              Sign up
+            </a>
           </p>
         </div>
       )}

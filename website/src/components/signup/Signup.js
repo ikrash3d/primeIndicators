@@ -5,7 +5,6 @@ import { TextField, Button, CircularProgress } from "@mui/material";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as Yup from "yup";
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
-import { uuidv4 } from "@firebase/util";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../index";
 import moment from "moment";
@@ -47,10 +46,8 @@ const Signup = () => {
         sendEmailVerification(response.user);
         sessionStorage.setItem("Auth Token", response._tokenResponse.refreshToken);
 
-        console.log(values);
-
         const user = {
-          userId: uuidv4(),
+          userId: response.user.uid,
           firstName: values.firstName,
           lastName: values.lastName,
           tradingViewName: values.tradingViewName,

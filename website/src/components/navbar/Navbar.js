@@ -27,6 +27,8 @@ const Navbar = () => {
     setAuthToken(token);
   }, []);
 
+  useEffect(() => {}, []);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -46,6 +48,26 @@ const Navbar = () => {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const renderMyAccountLink = () => {
+    console.log(sessionStorage.getItem("Auth Token"));
+    if (sessionStorage.getItem("Auth Token")) {
+      return (
+        <Link underline="none" component={RouterLink} to="/account">
+          <Button variant="container" className={styles.buttonStyle}>
+            My Account
+          </Button>
+        </Link>
+      );
+    }
+    return (
+      <Link underline="none" component={RouterLink} to="/login-page">
+        <Button variant="container" className={styles.buttonStyle}>
+          My Account
+        </Button>
+      </Link>
+    );
   };
 
   const renderLogInLogOutButton = () => {
@@ -137,11 +159,8 @@ const Navbar = () => {
               Story
             </Button>
           </Link>
-          <Link underline="none" component={RouterLink} to="/login-page">
-            <Button variant="container" className={styles.buttonStyle}>
-              My Account
-            </Button>
-          </Link>
+
+          {renderMyAccountLink()}
 
           {renderLogInLogOutButton()}
         </ul>
