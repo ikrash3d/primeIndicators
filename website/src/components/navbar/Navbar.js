@@ -69,6 +69,29 @@ const Navbar = () => {
     );
   };
 
+  const renderMyAccountLinkMobile = () => {
+    if (sessionStorage.getItem("Auth Token")) {
+      return (
+        <MenuItem onClick={handleClose}>
+          <Link underline="none" component={RouterLink} to="/account">
+            <Button variant="container" className={styles.buttonStyle}>
+              My Account
+            </Button>
+          </Link>
+        </MenuItem>
+      );
+    }
+    return (
+      <MenuItem onClick={handleClose}>
+        <Link underline="none" component={RouterLink} to="/login-page">
+          <Button variant="container" className={styles.buttonStyle}>
+            My Account
+          </Button>
+        </Link>
+      </MenuItem>
+    );
+  };
+
   const renderLogoutButton = () => {
     if (authToken !== null) {
       return (
@@ -125,13 +148,7 @@ const Navbar = () => {
               </Button>
             </Link>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <Link underline="none" component={RouterLink} to="/login-page">
-              <Button variant="container" className={styles.buttonStyle}>
-                My Account
-              </Button>
-            </Link>
-          </MenuItem>
+          {renderMyAccountLinkMobile()}
           {renderLogoutButton()}
         </Menu>
       </div>
