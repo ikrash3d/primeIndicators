@@ -1,39 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
+import { Menu, MenuItem, Button } from "@mui/material";
 import logo from "../../assets/TransparentLogo.png";
 import styles from "./navbar.module.css";
-import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "@mui/material/Link";
-import { getAuth, signOut } from "firebase/auth";
 
 const Navbar = () => {
-  const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
   const [authToken, setAuthToken] = useState("");
-  const [burgerMenuEffect, setBurgerMenuEffect] = useState(`${styles.closeBurgerMenu}`);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isMobileNavbar, setIsMobileNavbar] = useState(false);
+  const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.body.style.overflow = "visible";
-    if (isMobileMenuOpened) {
-      document.body.style.overflow = "hidden";
+    if (window.innerWidth < 768) {
+      setIsMobileNavbar(true);
       return;
     }
-  }, [isMobileMenuOpened]);
-
-  useEffect(() => {
-    isMobileMenuOpened
-      ? setBurgerMenuEffect(`${styles.openBurgerMenu}`)
-      : setBurgerMenuEffect(`${styles.closeBurgerMenu}`);
-  }, [isMobileMenuOpened]);
+    setIsMobileNavbar(false);
+  });
 
   useEffect(() => {
     let token = sessionStorage.getItem("Auth Token");
     setAuthToken(token);
   }, []);
 
-  const toggleBurgerMenu = () => {
-    setIsMobileMenuOpened(!isMobileMenuOpened);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const handleLogout = async () => {
@@ -65,9 +64,63 @@ const Navbar = () => {
     }
   };
 
+  const renderMobileMenu = () => {
+    return (
+      <div>
+        <Button
+          id="basic-button"
+          aria-controls={open ? "basic-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+        >
+          <MenuIcon className={styles.menuIcon}></MenuIcon>
+        </Button>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem onClick={handleClose}>
+            <Link underline="none" component={RouterLink} to="/home">
+              <Button variant="container" className={styles.buttonStyle}>
+                Home
+              </Button>
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Link underline="none" component={RouterLink} to="/services">
+              <Button variant="container" className={styles.buttonStyle}>
+                Services
+              </Button>
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Link underline="none" component={RouterLink} to="/story">
+              <Button variant="container" className={styles.buttonStyle}>
+                Story
+              </Button>
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Link underline="none" component={RouterLink} to="/login-page">
+              <Button variant="container" className={styles.buttonStyle}>
+                My Account
+              </Button>
+            </Link>
+          </MenuItem>
+        </Menu>
+      </div>
+    );
+  };
+
   const menuContent = () => {
     return (
-      <div className={`${styles.contentContainer} ${burgerMenuEffect}`}>
+      <div className={styles.contentContainer}>
         <ul>
           <Link underline="none" component={RouterLink} to="/home">
             <Button variant="container" className={styles.buttonStyle}>
@@ -102,10 +155,8 @@ const Navbar = () => {
       </div>
 
       <div className={styles.separator} style={{ width: "100%" }}>
-        <div onClick={toggleBurgerMenu} className={styles.menuIconContainer}>
-          <MenuIcon className={styles.menuIcon}></MenuIcon>
-        </div>
-        {menuContent()}
+        {isMobileNavbar && renderMobileMenu()}
+        {!isMobileNavbar && menuContent()}
       </div>
     </div>
   );

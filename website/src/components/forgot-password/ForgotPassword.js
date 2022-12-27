@@ -36,14 +36,14 @@ const ForgotPassword = () => {
 
   return (
     <div className={styles.container}>
-      <h4 style={{ textAlign: "center" }}>Please provide your email you signed up with</h4>
+      <h4 style={{ textAlign: "center" }}>Please provide the email you signed up with</h4>
       <TextField fullWidth variant="outlined" value={userEmail} onChange={handleUserEmail}></TextField>
       <br></br>
       <Button type="submit" variant="contained" style={{ backgroundColor: "#168a53" }} onClick={handleResetPassword}>
         Forgot Password
       </Button>
       <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={snackBarStatus}
         TransitionComponent={Slide}
         autoHideDuration={4000}
