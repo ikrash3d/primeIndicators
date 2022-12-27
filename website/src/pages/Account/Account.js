@@ -22,7 +22,7 @@ export const Account = () => {
 
   const fetchData = async () => {
     const auth = getAuth();
-    console.log(auth);
+
     const currentUserUid = auth.currentUser.uid;
 
     const querySnapshot = await getDocs(collection(db, "users"));
