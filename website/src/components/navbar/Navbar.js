@@ -20,7 +20,7 @@ const Navbar = () => {
       return;
     }
     setIsMobileNavbar(false);
-  });
+  }, []);
 
   useEffect(() => {
     let token = sessionStorage.getItem("Auth Token");

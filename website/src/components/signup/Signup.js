@@ -1,14 +1,20 @@
-import React from "react";
-import { TextField, Button } from "@mui/material";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./Signup.module.css";
+import { TextField, Button, CircularProgress } from "@mui/material";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as Yup from "yup";
-import styles from "./Signup.module.css";
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { uuidv4 } from "@firebase/util";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../index";
+import moment from "moment";
 
 const PASSWORD_REGEX = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
 
 const Signup = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const initialSignUpValue = {
     firstName: "",
     lastName: "",
@@ -22,7 +28,7 @@ const Signup = () => {
   const signUpSchema = Yup.object().shape({
     firstName: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("A first name is required"),
     lastName: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("A last name is required"),
-    tradingViewName: Yup.string().required("Your TradingView username/email is required"),
+    tradingViewName: Yup.string().required("Your TradingView username is required"),
     email: Yup.string().email("Invalid email").required("An email is required"),
     password: Yup.string()
       .min(8, "Too Short!")
@@ -34,17 +40,34 @@ const Signup = () => {
   });
 
   const handleSignUpSubmit = (values, props) => {
+    setIsLoading(true);
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, values.email, values.password)
       .then((response) => {
-        console.log(response);
         sendEmailVerification(response.user);
         sessionStorage.setItem("Auth Token", response._tokenResponse.refreshToken);
+
+        console.log(values);
+
+        const user = {
+          userId: uuidv4(),
+          firstName: values.firstName,
+          lastName: values.lastName,
+          tradingViewName: values.tradingViewName,
+          email: values.email,
+          subscription: "",
+          signupTime: moment().format("MMMM Do YYYY, h:mm:ss a"),
+        };
+
+        addDoc(collection(db, "users"), { user });
+
+        setIsLoading(false);
         navigate("/home");
         props.resetForm();
       })
       .catch((error) => {
-        console.log(error.code);
+        console.log(error);
+        setIsLoading(false);
         if (error.code === "auth/wrong-password") {
           alert("Please check the Password");
         }
@@ -57,7 +80,6 @@ const Signup = () => {
   return (
     <Formik initialValues={initialSignUpValue} validationSchema={signUpSchema} onSubmit={handleSignUpSubmit}>
       {(props) => {
-        const { name } = props.values;
         return (
           <Form className={styles.container}>
             <h1>Sign up</h1>
@@ -118,9 +140,12 @@ const Signup = () => {
             ></Field>
             <br></br>
 
-            <Button type="submit" variant="contained" style={{ backgroundColor: "#168a53" }}>
-              Sign up
-            </Button>
+            {!isLoading && (
+              <Button type="submit" variant="contained" style={{ backgroundColor: "#168a53" }}>
+                Sign up
+              </Button>
+            )}
+            {isLoading && <CircularProgress style={{ color: "#168a53" }}></CircularProgress>}
           </Form>
         );
       }}

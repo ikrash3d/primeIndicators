@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import { TextField, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import styles from "./Login.module.css";
+import { TextField, Button, CircularProgress } from "@mui/material";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as Yup from "yup";
-import styles from "./Login.module.css";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [signUpForm, setSignUpForm] = useState(true);
-  const toggleSignUpForm = () => {
-    setSignUpForm(!signUpForm);
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const initialLogInValue = {
     email: "",
@@ -24,20 +21,23 @@ const Login = () => {
     password: Yup.string().required("Please provide your password"),
   });
 
-  const handleLogInSubmit = (values, props) => {
+  const handleLogInSubmit = (values) => {
+    setIsLoading(true);
     const auth = getAuth();
     signInWithEmailAndPassword(auth, values.email, values.password)
       .then((response) => {
-        navigate("/home");
         sessionStorage.setItem("Auth Token", response._tokenResponse.refreshToken);
+        setIsLoading(false);
+        navigate("/home");
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log(error.code);
         if (error.code === "auth/wrong-password") {
-          alert("Please check the Password");
+          alert("Wrong password, please check the password");
         }
         if (error.code === "auth/user-not-found") {
-          alert("Please check the Email");
+          alert("User not found, please check the email");
         }
       });
   };
@@ -72,9 +72,12 @@ const Login = () => {
             ></Field>
             <br></br>
 
-            <Button type="submit" variant="contained" style={{ backgroundColor: "#168a53" }}>
-              Log in
-            </Button>
+            {!isLoading && (
+              <Button type="submit" variant="contained" style={{ backgroundColor: "#168a53" }}>
+                Log in
+              </Button>
+            )}
+            {isLoading && <CircularProgress style={{ color: "#168a53" }}></CircularProgress>}
           </Form>
         );
       }}
