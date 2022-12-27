@@ -92,7 +92,7 @@ const Navbar = () => {
     );
   };
 
-  const renderLogoutButton = () => {
+  const renderLogoutButtonMobile = () => {
     if (authToken !== null) {
       return (
         <MenuItem onClick={handleClose}>
@@ -102,6 +102,17 @@ const Navbar = () => {
             </Button>
           </Link>
         </MenuItem>
+      );
+    }
+  };
+  const renderLogoutButton = () => {
+    if (authToken !== null) {
+      return (
+        <Link underline="none" component={RouterLink} to="/login-page">
+          <Button variant="container" className={styles.buttonStyle} onClick={handleLogout}>
+            Log Out
+          </Button>
+        </Link>
       );
     }
   };
@@ -149,7 +160,7 @@ const Navbar = () => {
             </Link>
           </MenuItem>
           {renderMyAccountLinkMobile()}
-          {renderLogoutButton()}
+          {renderLogoutButtonMobile()}
         </Menu>
       </div>
     );
