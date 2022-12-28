@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./Account.module.css";
 import Layout from "../../components/layout/Layout";
 import { getAuth } from "firebase/auth";
-import { collection, doc, setDoc, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
+import { CircularProgress } from "@mui/material";
 import { db } from "../../index";
 
 export const Account = () => {
@@ -16,11 +17,14 @@ export const Account = () => {
     uid: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
+    setIsLoading(true);
     const auth = getAuth();
 
     const currentUserUid = auth.currentUser.uid;
@@ -28,7 +32,6 @@ export const Account = () => {
     const querySnapshot = await getDocs(collection(db, "users"));
     querySnapshot.forEach((doc) => {
       const docUserData = doc.data().user;
-      console.log(docUserData);
       const docUserUid = docUserData.userId;
 
       if (docUserUid === currentUserUid) {
@@ -48,27 +51,35 @@ export const Account = () => {
         });
       }
     });
+    setIsLoading(false);
   };
 
   return (
     <Layout>
-      <div className={styles.container}>
-        <p>
-          Hello{" "}
-          <b>
-            {userDetails.firstName} {userDetails.lastName}
-          </b>
-        </p>
-        <p>
-          You signed up on the : <b>{userDetails.signupTime}</b> with this email <b>{userDetails.email}</b>
-        </p>
-        <p>
-          Your username on TradingView is: <b>{userDetails.tradingViewName}</b>
-        </p>
-        <p>
-          Your current subscription is <b>{userDetails.subscription}</b>
-        </p>
-      </div>
+      {isLoading && (
+        <div className={styles.container}>
+          <CircularProgress style={{ color: "#168a53" }}></CircularProgress>
+        </div>
+      )}
+      {!isLoading && (
+        <div className={styles.container}>
+          <p>
+            Hello{" "}
+            <b>
+              {userDetails.firstName} {userDetails.lastName}
+            </b>
+          </p>
+          <p>
+            You signed up on the : <b>{userDetails.signupTime}</b> with this email <b>{userDetails.email}</b>
+          </p>
+          <p>
+            Your username on TradingView is: <b>{userDetails.tradingViewName}</b>
+          </p>
+          <p>
+            Your current subscription is <b>{userDetails.subscription}</b>
+          </p>
+        </div>
+      )}
     </Layout>
   );
 };
