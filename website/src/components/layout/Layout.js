@@ -5,7 +5,7 @@ import Footer from "../footer/Footer";
 
 const Layout = (props) => {
   return (
-    <div>
+    <div className={styles.websiteContainer}>
       <Header></Header>
       <div className={styles.container}>{props.children}</div>
       <Footer></Footer>

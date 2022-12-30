@@ -8,6 +8,7 @@ import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../index";
 import moment from "moment";
+import SignupSubscription from "../signup-subscription/SignupSubscription";
 
 const PASSWORD_REGEX = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
 
@@ -75,78 +76,81 @@ const Signup = () => {
   };
 
   return (
-    <Formik initialValues={initialSignUpValue} validationSchema={signUpSchema} onSubmit={handleSignUpSubmit}>
-      {(props) => {
-        return (
-          <Form className={styles.container}>
-            <h1>Sign up</h1>
-            <Field
-              as={TextField}
-              label="First name"
-              name="firstName"
-              fullWidth
-              variant="outlined"
-              helperText={<ErrorMessage name="firstName"></ErrorMessage>}
-              error={props.errors.firstName && props.touched.firstName}
-            ></Field>
-            <br></br>
+    <div className={styles.divContainer}>
+      <SignupSubscription></SignupSubscription>
+      <Formik initialValues={initialSignUpValue} validationSchema={signUpSchema} onSubmit={handleSignUpSubmit}>
+        {(props) => {
+          return (
+            <Form className={styles.container}>
+              <h1>Sign up</h1>
+              <Field
+                as={TextField}
+                label="First name"
+                name="firstName"
+                fullWidth
+                variant="outlined"
+                helperText={<ErrorMessage name="firstName"></ErrorMessage>}
+                error={props.errors.firstName && props.touched.firstName}
+              ></Field>
+              <br></br>
 
-            <Field
-              as={TextField}
-              label="Last name"
-              name="lastName"
-              fullWidth
-              variant="outlined"
-              helperText={<ErrorMessage name="lastName"></ErrorMessage>}
-              error={props.errors.lastName && props.touched.lastName}
-            ></Field>
-            <br></br>
+              <Field
+                as={TextField}
+                label="Last name"
+                name="lastName"
+                fullWidth
+                variant="outlined"
+                helperText={<ErrorMessage name="lastName"></ErrorMessage>}
+                error={props.errors.lastName && props.touched.lastName}
+              ></Field>
+              <br></br>
 
-            <Field
-              as={TextField}
-              label="TradingView username"
-              name="tradingViewName"
-              fullWidth
-              variant="outlined"
-              helperText={<ErrorMessage name="tradingViewName"></ErrorMessage>}
-              error={props.errors.tradingViewName && props.touched.tradingViewName}
-            ></Field>
-            <br></br>
+              <Field
+                as={TextField}
+                label="TradingView username"
+                name="tradingViewName"
+                fullWidth
+                variant="outlined"
+                helperText={<ErrorMessage name="tradingViewName"></ErrorMessage>}
+                error={props.errors.tradingViewName && props.touched.tradingViewName}
+              ></Field>
+              <br></br>
 
-            <Field
-              as={TextField}
-              label="Email"
-              name="email"
-              type="email"
-              fullWidth
-              variant="outlined"
-              helperText={<ErrorMessage name="email"></ErrorMessage>}
-              error={props.errors.email && props.touched.email}
-            ></Field>
-            <br></br>
+              <Field
+                as={TextField}
+                label="Email"
+                name="email"
+                type="email"
+                fullWidth
+                variant="outlined"
+                helperText={<ErrorMessage name="email"></ErrorMessage>}
+                error={props.errors.email && props.touched.email}
+              ></Field>
+              <br></br>
 
-            <Field
-              as={TextField}
-              label="Password"
-              name="password"
-              type="password"
-              fullWidth
-              variant="outlined"
-              helperText={<ErrorMessage name="password"></ErrorMessage>}
-              error={props.errors.password && props.touched.password}
-            ></Field>
-            <br></br>
+              <Field
+                as={TextField}
+                label="Password"
+                name="password"
+                type="password"
+                fullWidth
+                variant="outlined"
+                helperText={<ErrorMessage name="password"></ErrorMessage>}
+                error={props.errors.password && props.touched.password}
+              ></Field>
+              <br></br>
 
-            {!isLoading && (
-              <Button type="submit" variant="contained" style={{ backgroundColor: "#168a53" }}>
-                Sign up
-              </Button>
-            )}
-            {isLoading && <CircularProgress style={{ color: "#168a53" }}></CircularProgress>}
-          </Form>
-        );
-      }}
-    </Formik>
+              {!isLoading && (
+                <Button type="submit" variant="contained" style={{ backgroundColor: "#168a53" }}>
+                  Sign up
+                </Button>
+              )}
+              {isLoading && <CircularProgress style={{ color: "#168a53" }}></CircularProgress>}
+            </Form>
+          );
+        }}
+      </Formik>
+    </div>
   );
 };
 
