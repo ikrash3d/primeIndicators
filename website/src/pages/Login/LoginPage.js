@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import styles from "./LoginPage.module.css";
-import Signup from "../../components/signup/Signup";
 import Login from "../../components/login/Login";
 import Layout from "../../components/layout/Layout";
 import ForgotPassword from "../../components/forgot-password/ForgotPassword";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [isSignUpForm, setIsSignUpForm] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
 
-  const toggleForm = () => {
-    setIsSignUpForm(!isSignUpForm);
-    setIsForgotPassword(false);
+  const navigate = useNavigate();
+
+  const toggleSignupPage = () => {
+    navigate("/signup-page");
   };
 
   const backToLoginForm = () => {
@@ -26,15 +27,7 @@ const LoginPage = () => {
 
   return (
     <Layout>
-      {isSignUpForm && !isForgotPassword && (
-        <div className={styles.container}>
-          <Signup></Signup>
-          <p>
-            Already have an account? <a onClick={toggleForm}>Log in</a>
-          </p>
-        </div>
-      )}
-      {!isSignUpForm && !isForgotPassword && (
+      {!isForgotPassword && (
         <div className={styles.container}>
           <h3>It appears that you're not logged in</h3>
           <Login></Login>
@@ -42,11 +35,11 @@ const LoginPage = () => {
             Forgot your password?
           </p>
           <p>
-            Don't have an account? <a onClick={toggleForm}>Sign up</a>
+            Don't have an account? <a onClick={toggleSignupPage}>Sign up</a>
           </p>
         </div>
       )}
-      {!isSignUpForm && isForgotPassword && (
+      {isForgotPassword && (
         <div className={styles.container}>
           <ForgotPassword></ForgotPassword>
           <p className={styles.forgotPassword} onClick={backToLoginForm}>

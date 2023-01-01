@@ -7,6 +7,7 @@ import Services from "./pages/Services/Services";
 import Story from "./pages/Story/Story";
 import Account from "./pages/Account/Account";
 import LoginPage from "./pages/Login/LoginPage";
+import SignupPage from "./pages/Signup/SignupPage";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route exactly path="/story" element={<Story></Story>}></Route>
         <Route exactly path="/account" element={<Account></Account>}></Route>
         <Route exactly path="/login-page" element={<LoginPage></LoginPage>}></Route>
+        <Route exactly path="/signup-page" element={<SignupPage></SignupPage>}></Route>
       </Routes>
     </Router>
   );

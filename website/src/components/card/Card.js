@@ -2,8 +2,14 @@ import React from "react";
 import styles from "./Card.module.css";
 import { Button } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
+import { useNavigate } from "react-router-dom";
 
 const Card = (props) => {
+  const navigate = useNavigate();
+  const toggleSignupPage = () => {
+    navigate("/signup-page");
+  };
+
   return (
     <div className={styles.container} style={{ height: props.height, width: props.width }}>
       <div className={styles.cardHeader}>
@@ -24,7 +30,7 @@ const Card = (props) => {
         </div>
       </div>
       <div className={styles.cardFooter}>
-        <Button variant="contained" style={{ backgroundColor: "#168a53" }}>
+        <Button variant="contained" onClick={toggleSignupPage} style={{ backgroundColor: "#168a53" }}>
           Subscribe
         </Button>
       </div>

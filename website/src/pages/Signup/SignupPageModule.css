@@ -1,0 +1,13 @@
+p,
+a {
+  font-weight: 600;
+}
+
+a {
+  color: #168a53;
+}
+
+a:hover {
+  cursor: pointer;
+  color: #0f5d38;
+}

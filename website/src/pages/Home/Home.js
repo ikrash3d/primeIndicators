@@ -4,9 +4,16 @@ import Layout from "../../components/layout/Layout";
 import Card from "../../components/card/Card";
 import logo from "../../assets/OriginalLogo.svg";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Home = (props) => {
   const [cardDimensions, setCardDimensions] = useState({ height: "320px", width: "25%" });
+
+  const navigate = useNavigate();
+
+  const toggleServicePage = () => {
+    navigate("/services");
+  };
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 768px)");
@@ -27,7 +34,7 @@ const Home = (props) => {
     <Layout currentAuth={props.currentAuth}>
       <img className={styles.imgContainer} src={logo} alt="Prime Indicator logo"></img>
       <h3 className={styles.subTitle}>Your place for the best indicators</h3>
-      <Button variant="contained" style={{ backgroundColor: "#168a53" }}>
+      <Button variant="contained" style={{ backgroundColor: "#168a53" }} onClick={toggleServicePage}>
         View our services
       </Button>
       <div className={styles.servicesContainer}>
