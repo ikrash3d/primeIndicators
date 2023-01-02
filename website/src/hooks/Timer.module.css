@@ -1,0 +1,56 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timerDisplay {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.time {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0px 5px 0px 5px;
+}
+
+.time span {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.time div {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+
+.time div span {
+  position: relative;
+  display: flex;
+  flex: 0 1 25%;
+  font-size: 30px;
+  background-color: #404549;
+  border-radius: 5px;
+  padding: 10px 12px 10px 12px;
+  margin-right: 2px;
+  color: white;
+}
+
+.divider {
+  margin-top: 5px;
+  font-size: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .time div span {
+    font-size: 15px;
+  }
+}

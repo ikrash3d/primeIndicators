@@ -13,7 +13,10 @@ const Card = (props) => {
   return (
     <div className={styles.container} style={{ height: props.height, width: props.width }}>
       <div className={styles.cardHeader}>
-        <h3>{props.price}</h3>
+        <s>
+          <h3>{props.price}</h3>
+        </s>
+        <h3 style={{ color: "red" }}>FREE</h3>
       </div>
       <div className={styles.cardContent}>
         <div className={styles.contentP}>

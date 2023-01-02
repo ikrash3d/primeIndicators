@@ -10,6 +10,10 @@ p {
   color: black;
 }
 
+h2 {
+  text-align: center;
+}
+
 .servicesContainer {
   margin-top: 50px;
   width: 100%;
@@ -30,8 +34,16 @@ p {
 }
 
 @media screen and (max-width: 767px) {
+  .imgContainer {
+    width: 50%;
+  }
   .servicesContainer {
     flex-direction: column;
+    padding-bottom: 50px;
+  }
+
+  h2 {
+    font-size: 20px;
   }
 
   .subTitle {

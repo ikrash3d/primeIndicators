@@ -5,6 +5,10 @@ import Card from "../../components/card/Card";
 import logo from "../../assets/OriginalLogo.svg";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Timer from "../../hooks/Timer";
+
+const DAYS = 90;
+const SECONDS_PER_DAY = 86400;
 
 const Home = (props) => {
   const [cardDimensions, setCardDimensions] = useState({ height: "320px", width: "25%" });
@@ -32,11 +36,14 @@ const Home = (props) => {
 
   return (
     <Layout currentAuth={props.currentAuth}>
+      <h2>Everything is free for the next 90 days!</h2>
+      <Timer></Timer>
       <img className={styles.imgContainer} src={logo} alt="Prime Indicator logo"></img>
       <h3 className={styles.subTitle}>Your place for the best indicators</h3>
       <Button variant="contained" style={{ backgroundColor: "#168a53" }} onClick={toggleServicePage}>
         View our services
       </Button>
+
       <div className={styles.servicesContainer}>
         <Card price="59.99$/month"></Card>
         <Card height={cardDimensions.height} width={cardDimensions.width} price="143.99$/quaterly"></Card>

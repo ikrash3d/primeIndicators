@@ -11,6 +11,10 @@
   border-radius: 10px;
 }
 
+.cardHeader {
+  text-align: center;
+}
+
 .cardFooter {
   margin-top: 15px;
 }
