@@ -23,6 +23,10 @@
   width: 50%;
 }
 
+.imgContainer:hover {
+  cursor: pointer;
+}
+
 ul {
   list-style-type: none;
   margin-right: 2vw;

@@ -2,6 +2,10 @@
   width: 30%;
 }
 
+.imgContainer:hover {
+  cursor: pointer;
+}
+
 .buttonContainer {
   margin-top: -50px;
 }

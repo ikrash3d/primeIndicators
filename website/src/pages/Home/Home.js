@@ -9,6 +9,8 @@ import Timer from "../../hooks/Timer";
 
 const DAYS = 90;
 const SECONDS_PER_DAY = 86440;
+const STARTING_DATE = 1672689829;
+const PROMO_DURATION = STARTING_DATE + DAYS * SECONDS_PER_DAY;
 
 const Home = (props) => {
   const [cardDimensions, setCardDimensions] = useState({ height: "320px", width: "25%" });
@@ -16,7 +18,7 @@ const Home = (props) => {
   const navigate = useNavigate();
 
   const time = new Date();
-  time.setSeconds(time.getSeconds() + SECONDS_PER_DAY * DAYS);
+  time.setSeconds(PROMO_DURATION - STARTING_DATE);
 
   const toggleServicePage = () => {
     navigate("/services");

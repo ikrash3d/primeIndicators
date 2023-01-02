@@ -22,12 +22,14 @@ const Navbar = () => {
     setIsMobileNavbar(false);
   }, []);
 
+  const toggleHomePage = () => {
+    navigate("/home");
+  };
+
   useEffect(() => {
     let token = sessionStorage.getItem("Auth Token");
     setAuthToken(token);
   }, []);
-
-  useEffect(() => {}, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -196,7 +198,7 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.separator} style={{ justifyContent: "flex-start" }}>
-        <img className={styles.imgContainer} src={logo} alt="Prime Indicator logo"></img>
+        <img onClick={toggleHomePage} className={styles.imgContainer} src={logo} alt="Prime Indicator logo"></img>
       </div>
 
       <div className={styles.separator} style={{ width: "100%" }}>
