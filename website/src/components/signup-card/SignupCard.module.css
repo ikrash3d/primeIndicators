@@ -9,11 +9,11 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background-color: rgba(255, 255, 255, 1);
   border-radius: 10px;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 }
 
 .container:hover {
-  transform: scale(1.2);
+  transform: scale(1.07);
   cursor: pointer;
 }
 

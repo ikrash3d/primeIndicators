@@ -3,9 +3,9 @@ import styles from "./Footer.module.css";
 
 const Footer = () => {
   return (
-    <div className={styles.container}>
+    <footer className={styles.container}>
       <p>© Prime Indicator 2022</p>
-    </div>
+    </footer>
   );
 };
 

@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./SignupSubscription.module.css";
-
-import { Button, Fade } from "@mui/material";
+import { Fade } from "@mui/material";
 import SignupCard from "../signup-card/SignupCard";
 
 const SignupSubscription = (props) => {
-  const [openModal, setOpenModal] = useState(true);
-
   const [cardDimensions, setCardDimensions] = useState({ height: "320px", width: "25%" });
 
   const [subscriptionSelected, setSubscriptionSelected] = useState({ id: "", price: "", terms: "" });
@@ -25,8 +22,9 @@ const SignupSubscription = (props) => {
     });
   };
 
+  const mediaQuery = window.matchMedia("(max-width: 768px)");
+
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 768px)");
     if (mediaQuery.matches) {
       setCardDimensions({ height: "", width: "90%" });
       return;
@@ -40,48 +38,38 @@ const SignupSubscription = (props) => {
     });
   }, []);
 
-  useEffect(() => {
-    if (openModal) {
-      document.body.style.overflow = "hidden";
-      return;
-    }
-    document.body.style.overflow = "visible";
-  }, [openModal]);
-
-  const handleClose = () => {
-    setOpenModal(false);
-  };
+  let fadeStyle = { width: "60%" };
+  if (mediaQuery.matches) {
+    fadeStyle.width = "100%";
+  }
+  console.log(fadeStyle);
 
   return (
-    <Fade in={openModal}>
-      <div className={styles.backdropContainer}>
-        <div className={styles.container}>
-          <div className={styles.closeButton}>
-            <Button style={{ fontSize: "20px", color: "#168a53" }} onClick={handleClose}>
-              X
-            </Button>
+    <Fade
+      in={props.value === props.index}
+      style={{ width: fadeStyle.width, display: "flex", justifyContent: "center", alignItems: "center" }}
+    >
+      <div hidden={props.value !== props.index}>
+        {props.value === props.index && (
+          <div className={styles.container}>
+            <h2>Please, chose a subscription</h2>
+            <div className={styles.subContainer}>
+              {subscriptions.map((subscription) => {
+                return (
+                  <SignupCard
+                    border={subscription.id === subscriptionSelected.id ? "2px solid #168a53" : "none"}
+                    id={subscription.id}
+                    key={subscription.id}
+                    height={cardDimensions.height}
+                    width={cardDimensions.width}
+                    price={`${subscription.price}$/${subscription.terms}`}
+                    onClick={(event) => handleSubscription(subscription, event)}
+                  ></SignupCard>
+                );
+              })}
+            </div>
           </div>
-          <h2>First, chose a subscription</h2>
-          <div className={styles.subContainer}>
-            {subscriptions.map((subscription) => {
-              return (
-                <SignupCard
-                  border={subscription.id === subscriptionSelected.id ? "2px solid #168a53" : "none"}
-                  id={subscription.id}
-                  key={subscription.id}
-                  height={cardDimensions.height}
-                  width={cardDimensions.width}
-                  price={`${subscription.price}$/${subscription.terms}`}
-                  onClick={(event) => handleSubscription(subscription, event)}
-                ></SignupCard>
-              );
-            })}
-          </div>
-
-          <Button variant="contained" style={{ backgroundColor: "#168a53" }} onClick={handleClose}>
-            Confirm
-          </Button>
-        </div>
+        )}
       </div>
     </Fade>
   );
