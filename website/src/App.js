@@ -8,10 +8,12 @@ import Story from "./pages/Story/Story";
 import Account from "./pages/Account/Account";
 import LoginPage from "./pages/Login/LoginPage";
 import SignupPage from "./pages/Signup/SignupPage";
+import ScrollTop from "./hooks/ScrollTopTop";
 
 const App = () => {
   return (
     <Router>
+      <ScrollTop></ScrollTop>
       <Routes>
         <Route exactly path="/" element={<Navigate replace to="/home"></Navigate>}></Route>
         <Route exactly path="/home" element={<Home></Home>}></Route>
