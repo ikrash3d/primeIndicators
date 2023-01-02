@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Signup.module.css";
 import { TextField, Button, CircularProgress, Fade } from "@mui/material";
@@ -13,6 +13,8 @@ const PASSWORD_REGEX = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])
 
 const Signup = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const [subscription, setSubscription] = useState({ id: "", price: "", terms: "" });
 
   const initialSignUpValue = {
     firstName: "",
@@ -38,6 +40,10 @@ const Signup = (props) => {
       .required("A password is required"),
   });
 
+  useEffect(() => {
+    setSubscription(props.subscription);
+  }, [props.subscription]);
+
   const handleSignUpSubmit = (values, props) => {
     setIsLoading(true);
     const auth = getAuth();
@@ -52,14 +58,14 @@ const Signup = (props) => {
           lastName: values.lastName,
           tradingViewName: values.tradingViewName,
           email: values.email,
-          subscription: "",
+          subscription: `${subscription.price}$/${subscription.terms}`,
           signupTime: moment().format("MMMM Do YYYY, h:mm:ss a"),
         };
 
         addDoc(collection(db, "users"), { user });
 
         setIsLoading(false);
-        navigate("/home");
+        navigate("/account");
         props.resetForm();
       })
       .catch((error) => {
@@ -147,6 +153,17 @@ const Signup = (props) => {
                     variant="outlined"
                     helperText={<ErrorMessage name="password"></ErrorMessage>}
                     error={props.errors.password && props.touched.password}
+                  ></Field>
+                  <br></br>
+
+                  <Field
+                    as={TextField}
+                    label={`${subscription.price}$/${subscription.terms}`}
+                    name="subscription"
+                    type="text"
+                    fullWidth
+                    variant="outlined"
+                    disabled={true}
                   ></Field>
                   <br></br>
 

@@ -28,7 +28,7 @@ const Login = () => {
       .then((response) => {
         sessionStorage.setItem("Auth Token", response._tokenResponse.refreshToken);
         setIsLoading(false);
-        navigate("/home");
+        navigate("/account");
       })
       .catch((error) => {
         setIsLoading(false);

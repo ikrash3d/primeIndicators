@@ -42,7 +42,6 @@ const SignupSubscription = (props) => {
   if (mediaQuery.matches) {
     fadeStyle.width = "100%";
   }
-  console.log(fadeStyle);
 
   return (
     <Fade
@@ -57,13 +56,13 @@ const SignupSubscription = (props) => {
               {subscriptions.map((subscription) => {
                 return (
                   <SignupCard
-                    border={subscription.id === subscriptionSelected.id ? "2px solid #168a53" : "none"}
+                    border={subscription.id === props.subscriptionSelected.id ? "2px solid #168a53" : "none"}
                     id={subscription.id}
                     key={subscription.id}
                     height={cardDimensions.height}
                     width={cardDimensions.width}
                     price={`${subscription.price}$/${subscription.terms}`}
-                    onClick={(event) => handleSubscription(subscription, event)}
+                    onClick={(event) => props.chooseSubscription(subscription, event)}
                   ></SignupCard>
                 );
               })}

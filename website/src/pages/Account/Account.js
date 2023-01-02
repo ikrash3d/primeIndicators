@@ -36,10 +36,12 @@ export const Account = () => {
 
       if (docUserUid === currentUserUid) {
         const docUserSub = docUserData.subscription;
-        const subscription = "You don't seem to have a subscription yet";
+        let subscription = "You don't seem to have a subscription yet";
+
         if (docUserSub !== "") {
           subscription = docUserSub;
         }
+
         setUserDetails({
           email: auth.currentUser.email,
           firstName: docUserData.firstName,
