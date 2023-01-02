@@ -8,12 +8,15 @@ import { useNavigate } from "react-router-dom";
 import Timer from "../../hooks/Timer";
 
 const DAYS = 90;
-const SECONDS_PER_DAY = 86400;
+const SECONDS_PER_DAY = 86440;
 
 const Home = (props) => {
   const [cardDimensions, setCardDimensions] = useState({ height: "320px", width: "25%" });
 
   const navigate = useNavigate();
+
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + SECONDS_PER_DAY * DAYS);
 
   const toggleServicePage = () => {
     navigate("/services");
@@ -37,7 +40,7 @@ const Home = (props) => {
   return (
     <Layout currentAuth={props.currentAuth}>
       <h2>Everything is free for the next 90 days!</h2>
-      <Timer></Timer>
+      <Timer expiryTimestamp={time}></Timer>
       <img className={styles.imgContainer} src={logo} alt="Prime Indicator logo"></img>
       <h3 className={styles.subTitle}>Your place for the best indicators</h3>
       <Button variant="contained" style={{ backgroundColor: "#168a53" }} onClick={toggleServicePage}>

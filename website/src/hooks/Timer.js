@@ -2,18 +2,13 @@ import React, { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import styles from "./Timer.module.css";
 
-const DAYS = 90;
-const SECONDS_PER_DAY = 86440.02;
-
-const Timer = () => {
-  let { seconds, minutes, hours, days, isRunning, start, pause, resume, restart } = useTimer({
+const Timer = ({ expiryTimestamp }) => {
+  let { seconds, minutes, hours, days, start } = useTimer({
+    expiryTimestamp,
     onExpire: () => console.warn("onExpire called"),
   });
 
   useEffect(() => {
-    const time = new Date();
-    time.setSeconds(time.getSeconds() + SECONDS_PER_DAY * DAYS);
-    restart(time);
     start();
   }, []);
 
