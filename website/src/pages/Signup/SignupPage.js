@@ -75,7 +75,7 @@ const SignupPage = () => {
           <div className={styles.actionButton}>
             <Button
               variant="contained"
-              style={{ backgroundColor: "#168a53", marginBottom: "20px", width: "auto" }}
+              style={{ backgroundColor: "#168a53", marginBottom: "20px", width: "150px" }}
               onClick={toggleSignupForm}
             >
               Confirm
@@ -84,7 +84,7 @@ const SignupPage = () => {
             <Button
               variant="contained"
               className={styles.button}
-              style={{ backgroundColor: "#168a53", marginBottom: "20px", width: "auto" }}
+              style={{ backgroundColor: "#168a53", marginBottom: "20px", width: "150px" }}
               onClick={() => navigate("/home")}
             >
               Go back home
@@ -96,7 +96,7 @@ const SignupPage = () => {
       {value === 1 && (
         <Button
           variant="contained"
-          style={{ backgroundColor: "#168a53", margin: "40px 0px 20px 0px", width: "100px" }}
+          style={{ backgroundColor: "#168a53", margin: "40px 0px 20px 0px", width: "150px" }}
           onClick={() => setValue(0)}
         >
           Go back

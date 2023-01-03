@@ -13,7 +13,7 @@ const STARTING_DATE = 1672706449170;
 const PROMO_DURATION = STARTING_DATE + DAYS * SECONDS_PER_DAY;
 
 const Home = (props) => {
-  const [cardDimensions, setCardDimensions] = useState({ height: "320px", width: "25%" });
+  const [cardDimensions, setCardDimensions] = useState({ height: "350px", width: "25%" });
 
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const Home = (props) => {
         setCardDimensions({ height: "", width: "90%" });
         return;
       }
-      setCardDimensions({ height: "320px", width: "25%" });
+      setCardDimensions({ height: "350px", width: "25%" });
     });
   }, []);
 
@@ -51,9 +51,14 @@ const Home = (props) => {
       </Button>
 
       <div className={styles.servicesContainer}>
-        <Card price="59.99$/month"></Card>
-        <Card height={cardDimensions.height} width={cardDimensions.width} price="143.99$/quaterly"></Card>
-        <Card price="503.99$/yearly"></Card>
+        <Card price="59.99$/month" monthly="59.99$/month"></Card>
+        <Card
+          height={cardDimensions.height}
+          width={cardDimensions.width}
+          price="143.99$/quaterly"
+          monthly="35.99$/month"
+        ></Card>
+        <Card price="503.99$/yearly" monthly="41.99$/month"></Card>
       </div>
     </Layout>
   );

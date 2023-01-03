@@ -15,6 +15,7 @@ const Card = (props) => {
       <div className={styles.cardHeader}>
         <s>
           <h3>{props.price}</h3>
+          <span>{props.monthly}</span>
         </s>
         <h3 style={{ color: "red" }}>FREE</h3>
       </div>

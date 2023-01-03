@@ -52,6 +52,8 @@ const SignupSubscription = (props) => {
         {props.value === props.index && (
           <div className={styles.container}>
             <h2>Please, chose a subscription</h2>
+            <span>Even though the content is free for the next 90 days, you must choose a subscription.</span>
+            <br></br>
             <div className={styles.subContainer}>
               {subscriptions.map((subscription) => {
                 return (
