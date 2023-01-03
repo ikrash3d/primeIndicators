@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import styles from "./SignupPageModule.css";
+import styles from "./SignupPage.module.css";
 import Signup from "../../components/signup/Signup";
 import Layout from "../../components/layout/Layout";
 import SignupSubscription from "../../components/signup-subscription/SignupSubscription";
 import { Tabs, Tab, Button, Snackbar, Slide, SnackbarContent } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
   const [value, setValue] = useState(0);
@@ -17,6 +18,8 @@ const SignupPage = () => {
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const navigate = useNavigate();
 
   const handleSubscription = async (subscription) => {
     setSubscription({
@@ -69,13 +72,24 @@ const SignupPage = () => {
           subscriptionSelected={subscription}
         ></SignupSubscription>
         {value === 0 && (
-          <Button
-            variant="contained"
-            style={{ backgroundColor: "#168a53", marginBottom: "20px", width: "100px" }}
-            onClick={toggleSignupForm}
-          >
-            Confirm
-          </Button>
+          <div className={styles.actionButton}>
+            <Button
+              variant="contained"
+              style={{ backgroundColor: "#168a53", marginBottom: "20px", width: "auto" }}
+              onClick={toggleSignupForm}
+            >
+              Confirm
+            </Button>
+
+            <Button
+              variant="contained"
+              className={styles.button}
+              style={{ backgroundColor: "#168a53", marginBottom: "20px", width: "auto" }}
+              onClick={() => navigate("/home")}
+            >
+              Go back home
+            </Button>
+          </div>
         )}
       </div>
       <Signup value={value} index={1} subscription={subscription}></Signup>
@@ -96,7 +110,10 @@ const SignupPage = () => {
         onClose={handleCloseSnackbar}
       >
         <SnackbarContent
-          style={{ backgroundColor: snackbarColor, justifyContent: "center", alignItems: "center" }}
+          style={{
+            backgroundColor: snackbarColor,
+            textAlign: "center",
+          }}
           className={styles.snackbarContent}
           message={snackbarMessage}
         ></SnackbarContent>

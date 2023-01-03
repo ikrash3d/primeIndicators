@@ -6,6 +6,13 @@
   flex-direction: column;
 }
 
+.actionButton {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 20%;
+}
+
 p,
 a {
   font-weight: 600;
@@ -18,4 +25,10 @@ a {
 a:hover {
   cursor: pointer;
   color: #0f5d38;
+}
+
+@media screen and (max-width: 768px) {
+  .actionButton {
+    width: 90%;
+  }
 }

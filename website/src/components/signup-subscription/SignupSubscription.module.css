@@ -21,6 +21,10 @@
   padding-bottom: 50px;
 }
 
+.container h2 {
+  margin-top: 0;
+}
+
 @media screen and (max-width: 768px) {
   .container {
     width: 85%;
