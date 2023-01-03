@@ -9,7 +9,7 @@ import Timer from "../../hooks/Timer";
 
 const DAYS = 90;
 const SECONDS_PER_DAY = 86440;
-const STARTING_DATE = 1672689829;
+const STARTING_DATE = 1672704303849;
 const PROMO_DURATION = STARTING_DATE + DAYS * SECONDS_PER_DAY;
 
 const Home = (props) => {
@@ -18,7 +18,8 @@ const Home = (props) => {
   const navigate = useNavigate();
 
   const time = new Date();
-  time.setSeconds(PROMO_DURATION - STARTING_DATE);
+
+  time.setSeconds(PROMO_DURATION - Date.now());
 
   const toggleServicePage = () => {
     navigate("/services");
