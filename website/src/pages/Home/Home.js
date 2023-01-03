@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 import Timer from "../../hooks/Timer";
 
 const DAYS = 90;
-const SECONDS_PER_DAY = 86440;
-const STARTING_DATE = 1672704303849;
+const SECONDS_PER_DAY = 86440000;
+const STARTING_DATE = 1672706449170;
 const PROMO_DURATION = STARTING_DATE + DAYS * SECONDS_PER_DAY;
 
 const Home = (props) => {
@@ -19,7 +19,7 @@ const Home = (props) => {
 
   const time = new Date();
 
-  time.setSeconds(PROMO_DURATION - Date.now());
+  time.setMilliseconds(time.getMilliseconds() + (PROMO_DURATION - Date.now()));
 
   const toggleServicePage = () => {
     navigate("/services");
