@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Signup.module.css";
-import { TextField, Button, CircularProgress, Fade } from "@mui/material";
+import { TextField, Button, CircularProgress, Fade, InputAdornment, IconButton } from "@mui/material";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as Yup from "yup";
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../index";
 import moment from "moment";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const PASSWORD_REGEX = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
 
 const Signup = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [subscription, setSubscription] = useState({ id: "", price: "", terms: "" });
 
@@ -22,6 +27,7 @@ const Signup = (props) => {
     tradingViewName: "",
     email: "",
     password: "",
+    confirmPassword: "",
   };
 
   const navigate = useNavigate();
@@ -38,6 +44,12 @@ const Signup = (props) => {
         "Must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character"
       )
       .required("A password is required"),
+    confirmPassword: Yup.string()
+      .when("password", {
+        is: (val) => (val && val.length > 0 ? true : false),
+        then: Yup.string().oneOf([Yup.ref("password")], "Both password need to be the same"),
+      })
+      .required("Confirming your password is required"),
   });
 
   useEffect(() => {
@@ -58,7 +70,9 @@ const Signup = (props) => {
           lastName: values.lastName,
           tradingViewName: values.tradingViewName,
           email: values.email,
-          subscription: `${subscription.price}$/${subscription.terms}`,
+          subscriptionId: subscription.id,
+          subscriptionPrice: subscription.price,
+          subscriptionTerms: subscription.terms,
           signupTime: moment().format("MMMM Do YYYY, h:mm:ss a"),
         };
 
@@ -87,12 +101,29 @@ const Signup = (props) => {
     fadeStyle.width = "90%";
   }
 
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleShowConfirmPassowrd = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
   return (
     <Fade
       in={props.value === props.index}
-      style={{ width: fadeStyle.width, display: "flex", justifyContent: "center", alignItems: "center" }}
+      style={{
+        width: fadeStyle.width,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
     >
       <div hidden={props.value !== props.index}>
+        <span className={styles.warningMessage}>
+          Even though the content is free for the next 90 days, the wanted subscription is selected.
+        </span>
         {props.value === props.index && (
           <Formik initialValues={initialSignUpValue} validationSchema={signUpSchema} onSubmit={handleSignUpSubmit}>
             {(props) => {
@@ -148,11 +179,41 @@ const Signup = (props) => {
                     as={TextField}
                     label="Password"
                     name="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     fullWidth
                     variant="outlined"
                     helperText={<ErrorMessage name="password"></ErrorMessage>}
                     error={props.errors.password && props.touched.password}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleShowPassword}>
+                            {showPassword ? <Visibility></Visibility> : <VisibilityOff></VisibilityOff>}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  ></Field>
+                  <br></br>
+
+                  <Field
+                    as={TextField}
+                    label="Confirm password"
+                    name="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    fullWidth
+                    variant="outlined"
+                    helperText={<ErrorMessage name="confirmPassword"></ErrorMessage>}
+                    error={props.errors.confirmPassword}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleShowConfirmPassowrd}>
+                            {showConfirmPassword ? <Visibility></Visibility> : <VisibilityOff></VisibilityOff>}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   ></Field>
                   <br></br>
 

@@ -10,6 +10,13 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
 }
+.warningMessage {
+  text-align: center;
+  color: rgb(234, 36, 36);
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: -20px;
+}
 
 @media screen and (max-width: 767px) {
   .container {
@@ -19,5 +26,9 @@
 
   .container h2 {
     font-size: 6vw;
+  }
+
+  .warningMessage {
+    margin-bottom: 20px;
   }
 }

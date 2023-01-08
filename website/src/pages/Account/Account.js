@@ -12,7 +12,7 @@ export const Account = () => {
     firstName: "",
     lastName: "",
     signupTime: "",
-    subscription: "",
+    subscription: { subscriptionId: "", subscriptionPrice: "", subscriptionTerms: "" },
     tradingViewName: "",
     uid: "",
   });
@@ -35,11 +35,16 @@ export const Account = () => {
       const docUserUid = docUserData.userId;
 
       if (docUserUid === currentUserUid) {
-        const docUserSub = docUserData.subscription;
-        let subscription = "You don't seem to have a subscription yet";
+        console.log(docUserData);
+        const docUserSubId = docUserData.subscriptionId;
+        let userSubscription = "You don't seem to have a subscription yet";
 
-        if (docUserSub !== "") {
-          subscription = docUserSub;
+        if (docUserSubId !== "") {
+          userSubscription = {
+            subscriptionId: docUserData.subscriptionId,
+            subscriptionPrice: docUserData.subscriptionPrice,
+            subscriptionTerms: docUserData.subscriptionTerms,
+          };
         }
 
         setUserDetails({
@@ -47,7 +52,7 @@ export const Account = () => {
           firstName: docUserData.firstName,
           lastName: docUserData.lastName,
           signupTime: docUserData.signupTime,
-          subscription: subscription,
+          subscription: userSubscription,
           tradingViewName: docUserData.tradingViewName,
           uid: docUserData.userId,
         });
@@ -78,7 +83,10 @@ export const Account = () => {
             Your username on TradingView is: <b>{userDetails.tradingViewName}</b>
           </p>
           <p>
-            Your current subscription is <b>{userDetails.subscription}</b>
+            Your current subscription is{" "}
+            <b>
+              {userDetails.subscription.subscriptionPrice}$/{userDetails.subscription.subscriptionTerms}
+            </b>
           </p>
         </div>
       )}

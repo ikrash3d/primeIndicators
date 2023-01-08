@@ -51,14 +51,16 @@ const Home = (props) => {
       </Button>
 
       <div className={styles.servicesContainer}>
-        <Card price="59.99$/month" monthly="59.99$/month"></Card>
+        <Card price="59.99" terms="month" monthly="59.99$/month" subId="1"></Card>
         <Card
           height={cardDimensions.height}
           width={cardDimensions.width}
-          price="143.99$/quaterly"
+          price="143.99"
+          terms="quaterly"
           monthly="35.99$/month"
+          subId="2"
         ></Card>
-        <Card price="503.99$/yearly" monthly="41.99$/month"></Card>
+        <Card price="503.99" terms="yearly" monthly="41.99$/month" subId="3"></Card>
       </div>
     </Layout>
   );

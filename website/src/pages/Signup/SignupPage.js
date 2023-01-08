@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./SignupPage.module.css";
 import Signup from "../../components/signup/Signup";
 import Layout from "../../components/layout/Layout";
 import SignupSubscription from "../../components/signup-subscription/SignupSubscription";
 import { Tabs, Tab, Button, Snackbar, Slide, SnackbarContent } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [value, setValue] = useState(0);
 
   const [subscription, setSubscription] = useState({ id: "", price: "", terms: "" });
@@ -19,7 +22,11 @@ const SignupPage = () => {
     setValue(newValue);
   };
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const { subId, price, terms } = location.state;
+    setSubscription({ id: subId, price: price, terms: terms });
+    setValue(1);
+  }, [location.state]);
 
   const handleSubscription = async (subscription) => {
     setSubscription({
@@ -94,10 +101,17 @@ const SignupPage = () => {
       </div>
       <Signup value={value} index={1} subscription={subscription}></Signup>
       {value === 1 && (
+        // <Button
+        //   variant="contained"
+        //   style={{ backgroundColor: "#168a53", margin: "40px 0px 20px 0px", width: "150px" }}
+        //   onClick={() => setValue(0)}
+        // >
+        //   Go back
+        // </Button>
         <Button
           variant="contained"
           style={{ backgroundColor: "#168a53", margin: "40px 0px 20px 0px", width: "150px" }}
-          onClick={() => setValue(0)}
+          onClick={() => navigate("/home")}
         >
           Go back
         </Button>

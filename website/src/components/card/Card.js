@@ -7,14 +7,22 @@ import { useNavigate } from "react-router-dom";
 const Card = (props) => {
   const navigate = useNavigate();
   const toggleSignupPage = () => {
-    navigate("/signup-page");
+    navigate("/signup-page", {
+      state: {
+        price: props.price,
+        terms: props.terms,
+        subId: props.subId,
+      },
+    });
   };
 
   return (
-    <div className={styles.container} style={{ height: props.height, width: props.width }}>
+    <div className={styles.container} style={{ height: props.height, width: props.width }} id={props.subId}>
       <div className={styles.cardHeader}>
         <s>
-          <h3>{props.price}</h3>
+          <h3>
+            {props.price}$/{props.terms}
+          </h3>
           <span>{props.monthly}</span>
         </s>
         <h3 style={{ color: "red" }}>FREE</h3>
