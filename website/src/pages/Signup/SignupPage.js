@@ -23,9 +23,11 @@ const SignupPage = () => {
   };
 
   useEffect(() => {
-    const { subId, price, terms } = location.state;
-    setSubscription({ id: subId, price: price, terms: terms });
-    setValue(1);
+    if (location.state !== null) {
+      const { subId, price, terms } = location.state;
+      setSubscription({ id: subId, price: price, terms: terms });
+      setValue(1);
+    }
   }, [location.state]);
 
   const handleSubscription = async (subscription) => {
